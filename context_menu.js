@@ -5,6 +5,7 @@ class Menu {
     #onClose;
     #container;
     #containerCssClassName = 'menu';
+    #abortController;
 
     constructor({ target, onOpen, onClose }) {
         this.#onOpen = onOpen;
@@ -25,7 +26,11 @@ class Menu {
             this.#show(absTopPositionPx, absLeftPositionPx);
             e.preventDefault();
 
-            document.addEventListener('scroll', this.#hide.bind(this), { once: true });
+            this.#abortController = new AbortController();
+            document.addEventListener('scroll', this.#hide.bind(this), {
+                once: true,
+                signal: this.#abortController.signal
+            });
 
             // Without this the menu will be immediately closed by the "contextmenu" event on the document
             e.stopPropagation();
@@ -55,7 +60,7 @@ class Menu {
 
         this.#onClose();
         this.#container.hidden = true;
-        document.removeEventListener('scroll', this.#hide.bind(this));
+        this.#abortController.abort();
     }
     #createContainer() {
         const container = document.createElement('ul');
