@@ -13,11 +13,6 @@ class ContextMenu {
         this.#createContainer();
 
         target.addEventListener('contextmenu', (e) => {
-            if (!this.#container.hidden) {
-                this.#hide();
-            }
-
-            // Call back
             if (!this.#onOpen(e)) {
                 return;
             }
