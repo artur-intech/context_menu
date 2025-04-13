@@ -17,6 +17,7 @@ class ContextMenu {
                 this.#hide();
             }
 
+            // Call back
             if (!this.#onOpen(e)) {
                 return;
             }
