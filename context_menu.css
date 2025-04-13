@@ -1,0 +1,41 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 150%;
+}
+
+ol,
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.items-with-context-menu {
+    display: flex;
+}
+
+.items-with-context-menu .item {
+    background: #aaa;
+    width: 10em;
+    height: 10em;
+}
+
+.menu {
+    background: white;
+    border: #ccc solid 1px;
+    border-radius: .5em;
+    box-shadow: .3em .3em .5em gray;
+    position: absolute;
+    user-select: none;
+}
+
+.menu .item {
+    cursor: default;
+    padding: .5em 1em;
+}
+
+.menu .item:hover {
+    border-radius: .5em;
+    background: #f1f1f1;
+}
