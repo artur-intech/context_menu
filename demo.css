@@ -1,0 +1,15 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    line-height: 150%;
+}
+
+.items-with-context-menu {
+    display: flex;
+}
+
+.items-with-context-menu .item {
+    background: #aaa;
+    width: 10em;
+    height: 10em;
+}
