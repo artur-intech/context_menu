@@ -19,9 +19,9 @@
         // Initialize and configure a new menu
         const menu = new ContextMenu({
             target: document.querySelector('.js-items-with-context-menu'),
-            onOpen: function (_contextMenuEvent) {
-                console.log('onOpen callback');
-                return true; // A callback must return true.
+            beforeOpen: function (_contextMenuEvent) {
+                console.log('beforeOpen callback');
+                return true; // A callback must return true
             },
             onClose: function () {
                 console.log('onClose callback');

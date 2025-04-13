@@ -1,14 +1,14 @@
 'use strict';
 
 class ContextMenu {
-    #onOpen;
+    #beforeOpen;
     #onClose;
     #container;
     #containerCssClassName = 'menu';
     #abortController;
 
-    constructor({ target, onOpen, onClose }) {
-        this.#onOpen = onOpen;
+    constructor({ target, beforeOpen, onClose }) {
+        this.#beforeOpen = beforeOpen;
         this.#onClose = onClose;
         this.#createContainer();
 
@@ -18,7 +18,7 @@ class ContextMenu {
             }
 
             // Call back
-            if (!this.#onOpen(e)) {
+            if (!this.#beforeOpen(e)) {
                 return;
             }
 
