@@ -12,9 +12,6 @@ class Menu {
         this.#onClose = onClose;
         this.#createContainer();
 
-        document.addEventListener('click', this.#hide.bind(this));
-        document.addEventListener('contextmenu', this.#hide.bind(this));
-
         target.addEventListener('contextmenu', (e) => {
             if (!this.#onOpen(e)) {
                 return;
@@ -27,19 +24,22 @@ class Menu {
             e.preventDefault();
 
             this.#abortController = new AbortController();
-            document.addEventListener('scroll', this.#hide.bind(this), {
+            const options = {
                 once: true,
                 signal: this.#abortController.signal
-            });
+            };
+
+            document.addEventListener('scroll', this.#hide.bind(this), options);
+            document.addEventListener('contextmenu', this.#hide.bind(this), options);
+            document.addEventListener('click', this.#hide.bind(this), options);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.#hide();
+                }
+            }, options);
 
             // Without this the menu will be immediately closed by the "contextmenu" event on the document
             e.stopPropagation();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                this.#hide();
-            }
         });
     }
     createItem(label, action) {
