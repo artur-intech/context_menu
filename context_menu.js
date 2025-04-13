@@ -1,6 +1,6 @@
 'use strict';
 
-class Menu {
+class ContextMenu {
     #onOpen;
     #onClose;
     #container;
