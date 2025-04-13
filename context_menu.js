@@ -13,8 +13,8 @@ class ContextMenu {
         this.#createContainer();
 
         target.addEventListener('contextmenu', (e) => {
-            if (!this.#container.hidden) {
-                this.#hide();
+            if (this.#opened) {
+                this.#close();
             }
 
             // Call back
@@ -25,7 +25,7 @@ class ContextMenu {
             const absTopPositionPx = e.pageY;
             const absLeftPositionPx = e.pageX;
 
-            this.#show(absTopPositionPx, absLeftPositionPx);
+            this.#open(absTopPositionPx, absLeftPositionPx);
             e.preventDefault();
 
             this.#abortController = new AbortController();
@@ -34,12 +34,12 @@ class ContextMenu {
                 signal: this.#abortController.signal
             };
 
-            document.addEventListener('scroll', this.#hide.bind(this), options);
-            document.addEventListener('contextmenu', this.#hide.bind(this), options);
-            document.addEventListener('click', this.#hide.bind(this), options);
+            document.addEventListener('scroll', this.#close.bind(this), options);
+            document.addEventListener('contextmenu', this.#close.bind(this), options);
+            document.addEventListener('click', this.#close.bind(this), options);
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    this.#hide();
+                    this.#close();
                 }
             }, options);
 
@@ -55,12 +55,12 @@ class ContextMenu {
 
         this.#container.appendChild(item);
     }
-    #show(absTopPositionPx, absLeftPositionPx) {
+    #open(absTopPositionPx, absLeftPositionPx) {
         this.#container.style.top = `${absTopPositionPx}px`;
         this.#container.style.left = `${absLeftPositionPx}px`;
         this.#container.hidden = false;
     }
-    #hide() {
+    #close() {
         if (this.#container.hidden) return;
 
         this.#onClose();
@@ -74,5 +74,8 @@ class ContextMenu {
 
         this.#container = container;
         document.body.appendChild(container);
+    }
+    #opened() {
+        return !this.#container.hidden;
     }
 }
