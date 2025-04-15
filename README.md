@@ -7,8 +7,13 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
 
 ## Usage
 
-1. Include the CSS and JS from `context_menu.css` and `context_menu.js`, respectively.
-2. Use `ContextMenu` class to create a new context menu:
+1. Include the CSS from `context_menu.css`.
+2. Include the JS module:
+    ```javascript
+    import { ContextMenu } from "context_menu.mjs";
+    ```
+    Tune the path to a file according to your environment.
+3. Use `ContextMenu` class to create a new context menu:
 
 ```javascript
 const menu = new ContextMenu({

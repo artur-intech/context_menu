@@ -1,6 +1,4 @@
-'use strict';
-
-class ContextMenu {
+export class ContextMenu {
     #beforeOpen;
     #onClose;
     #container;

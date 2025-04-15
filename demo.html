@@ -6,34 +6,14 @@
     <title></title>
     <link href="context_menu.css" rel="stylesheet">
     <link href="demo.css" rel="stylesheet">
-    <script src="context_menu.js"></script>
+    <script src="context_menu.mjs" type="module"></script>
+    <script src="app.js" type="module"></script>
 </head>
 
 <body>
     <div class="items-with-context-menu js-items-with-context-menu">
         <div class="item js-item">An item with a context menu</div>
     </div>
-    <script>
-        'use strict';
-
-        // Initialize and configure a new menu
-        const menu = new ContextMenu({
-            target: document.querySelector('.js-items-with-context-menu'),
-            beforeOpen: function (_contextMenuEvent) {
-                console.log('beforeOpen callback');
-                return true; // A callback must return true
-            },
-            onClose: function () {
-                console.log('onClose callback');
-            }
-        });
-        menu.createItem('Edit', function () {
-            console.log('Editing...');
-        });
-        menu.createItem('Delete', function () {
-            console.log('Deleting...');
-        });
-    </script>
 </body>
 
 </html>
