@@ -1,4 +1,4 @@
-import { ContextMenu } from "./context_menu.mjs";
+import { ContextMenu } from "../context_menu.mjs";
 
 // Initialize and configure a new menu
 const menu = new ContextMenu({

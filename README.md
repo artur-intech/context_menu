@@ -34,6 +34,10 @@ menu.createItem('Delete', function () {
 });
 ```
 
+## Demo
+
+See [demo application](demo/index.html)
+
 ## Browser support
 
 It should work in any of the latest browsers.
