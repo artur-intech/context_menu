@@ -11,7 +11,7 @@ export class ContextMenu {
         this.#createContainer();
 
         target.addEventListener('contextmenu', (e) => {
-            if (this.#opened) {
+            if (this.#opened()) {
                 this.#close();
             }
 
