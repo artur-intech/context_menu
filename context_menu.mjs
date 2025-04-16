@@ -24,8 +24,6 @@ export class ContextMenu {
             const posPx = this.#posPx(cursorPosPx);
             this.#open(posPx);
 
-            e.preventDefault();
-
             this.#abortController = new AbortController();
             const options = {
                 once: true,
@@ -43,6 +41,7 @@ export class ContextMenu {
 
             // Without this the menu will be immediately closed by the "contextmenu" event on the document
             e.stopPropagation();
+            this.#disableBrowserContextMenu(e);
         });
     }
     createItem(label, action) {
@@ -102,5 +101,8 @@ export class ContextMenu {
         this.#container.hidden = false;
         this.#container.style.top = 0;
         this.#container.style.left = 0;
+    }
+    #disableBrowserContextMenu(e) {
+        e.preventDefault();
     }
 }
