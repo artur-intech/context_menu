@@ -73,8 +73,8 @@ export class ContextMenu {
         return !this.#container.hidden;
     }
     #posPx(cursorPosPx) {
-        var y = cursorPosPx.y;
-        var x = cursorPosPx.x;
+        let y = cursorPosPx.y;
+        let x = cursorPosPx.x;
         const edgeOffsetPx = 5;
 
         this.#renderInvisibly();
