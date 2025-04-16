@@ -23,7 +23,7 @@ export class ContextMenu {
             const absTopPositionPx = e.pageY;
             const absLeftPositionPx = e.pageX;
 
-            this.#open(absTopPositionPx, absLeftPositionPx);
+            this.#open({ absTopPositionPx: absTopPositionPx, absLeftPositionPx: absLeftPositionPx });
             e.preventDefault();
 
             this.#abortController = new AbortController();
@@ -53,7 +53,7 @@ export class ContextMenu {
 
         this.#container.appendChild(item);
     }
-    #open(absTopPositionPx, absLeftPositionPx) {
+    #open({ absTopPositionPx, absLeftPositionPx }) {
         this.#container.style.top = `${absTopPositionPx}px`;
         this.#container.style.left = `${absLeftPositionPx}px`;
         this.#container.hidden = false;
