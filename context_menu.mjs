@@ -41,7 +41,7 @@ export class ContextMenu {
 
             // Without this the menu will be immediately closed by the "contextmenu" event on the document
             e.stopPropagation();
-            this.#disableBrowserContextMenu(e);
+            this.#disableDefaultContextMenu(e);
         });
     }
     createItem(label, action) {
@@ -102,7 +102,7 @@ export class ContextMenu {
         this.#container.style.top = 0;
         this.#container.style.left = 0;
     }
-    #disableBrowserContextMenu(e) {
+    #disableDefaultContextMenu(e) {
         e.preventDefault();
     }
 }
