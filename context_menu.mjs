@@ -33,11 +33,7 @@ export class ContextMenu {
             document.addEventListener('scroll', this.#close.bind(this), options);
             document.addEventListener('contextmenu', this.#close.bind(this), options);
             document.addEventListener('click', this.#close.bind(this), options);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    this.#close();
-                }
-            }, options);
+            document.addEventListener('keydown', this.#onKeydown.bind(this), options);
 
             // Without this the menu will be immediately closed by the "contextmenu" event on the document
             e.stopPropagation();
@@ -104,5 +100,12 @@ export class ContextMenu {
     }
     #disableDefaultContextMenu(e) {
         e.preventDefault();
+    }
+    #onKeydown(e) {
+        const escPressed = (e.key === 'Escape');
+
+        if (escPressed) {
+            this.#close();
+        }
     }
 }
