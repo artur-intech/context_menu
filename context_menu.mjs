@@ -35,8 +35,10 @@ export class ContextMenu {
             document.addEventListener('click', this.#close.bind(this), options);
             document.addEventListener('keydown', this.#onKeydown.bind(this), options);
 
-            // Without this the menu will be immediately closed by the "contextmenu" event on the document
+            // Without this the menu will be immediately closed by the `contextmenu` event handler on the document set
+            // above.
             e.stopPropagation();
+
             this.#disableDefaultContextMenu(e);
         });
     }
