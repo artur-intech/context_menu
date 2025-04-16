@@ -20,10 +20,10 @@ export class ContextMenu {
                 return;
             }
 
-            const absTopPositionPx = e.pageY;
-            const absLeftPositionPx = e.pageX;
+            const cursorPosPx = { y: e.pageY, x: e.pageX };
+            const posPx = this.#posPx(cursorPosPx);
+            this.#open(posPx);
 
-            this.#open({ absTopPositionPx: absTopPositionPx, absLeftPositionPx: absLeftPositionPx });
             e.preventDefault();
 
             this.#abortController = new AbortController();
@@ -53,9 +53,10 @@ export class ContextMenu {
 
         this.#container.appendChild(item);
     }
-    #open({ absTopPositionPx, absLeftPositionPx }) {
-        this.#container.style.top = `${absTopPositionPx}px`;
-        this.#container.style.left = `${absLeftPositionPx}px`;
+    #open(posPx) {
+        this.#container.style.top = `${posPx.y}px`;
+        this.#container.style.left = `${posPx.x}px`;
+        this.#container.style.visibility = 'visible';
         this.#container.hidden = false;
     }
     #close() {
@@ -75,5 +76,31 @@ export class ContextMenu {
     }
     #opened() {
         return !this.#container.hidden;
+    }
+    #posPx(cursorPosPx) {
+        var y = cursorPosPx.y;
+        var x = cursorPosPx.x;
+        const edgeOffsetPx = 5;
+
+        this.#renderInvisibly();
+
+        const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.scrollHeight;
+        if (documentYOverflown) {
+            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffsetPx;
+        }
+
+        const documentXOverflown = (x + this.#container.offsetWidth) > document.documentElement.scrollWidth;
+        if (documentXOverflown) {
+            x = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffsetPx;
+        }
+
+        return { y: y, x: x };
+    }
+    // Renders hidden container to enable dimensions calculation.
+    #renderInvisibly() {
+        this.#container.style.visibility = 'hidden';
+        this.#container.hidden = false;
+        this.#container.style.top = 0;
+        this.#container.style.left = 0;
     }
 }
