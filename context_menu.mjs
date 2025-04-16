@@ -20,7 +20,7 @@ export class ContextMenu {
                 return;
             }
 
-            const cursorPosPx = { y: e.pageY, x: e.pageX };
+            const cursorPosPx = { x: e.pageX, y: e.pageY };
             const posPx = this.#posPx(cursorPosPx);
             this.#open(posPx);
 
@@ -49,8 +49,8 @@ export class ContextMenu {
         this.#container.appendChild(item);
     }
     #open(posPx) {
-        this.#container.style.top = `${posPx.y}px`;
         this.#container.style.left = `${posPx.x}px`;
+        this.#container.style.top = `${posPx.y}px`;
         this.#container.style.visibility = 'visible';
         this.#container.hidden = false;
     }
@@ -73,20 +73,20 @@ export class ContextMenu {
         return !this.#container.hidden;
     }
     #posPx(cursorPosPx) {
-        let y = cursorPosPx.y;
         let x = cursorPosPx.x;
+        let y = cursorPosPx.y;
         const edgeOffsetPx = 5;
 
         this.#renderInvisibly();
 
-        const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.scrollHeight;
-        if (documentYOverflown) {
-            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffsetPx;
-        }
-
         const documentXOverflown = (x + this.#container.offsetWidth) > document.documentElement.scrollWidth;
         if (documentXOverflown) {
             x = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffsetPx;
+        }
+
+        const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.scrollHeight;
+        if (documentYOverflown) {
+            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffsetPx;
         }
 
         return { y: y, x: x };
@@ -95,8 +95,8 @@ export class ContextMenu {
     #renderInvisibly() {
         this.#container.style.visibility = 'hidden';
         this.#container.hidden = false;
-        this.#container.style.top = 0;
         this.#container.style.left = 0;
+        this.#container.style.top = 0;
     }
     #disableDefaultContextMenu(e) {
         e.preventDefault();
