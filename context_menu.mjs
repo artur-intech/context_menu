@@ -29,7 +29,7 @@ export class ContextMenu {
     constructor({ target, beforeOpen, onClose, css: customCss }) {
         this.#beforeOpen = beforeOpen;
         this.#onClose = onClose;
-        this.#createShadowDom(customCss);
+        this.#createShadowDom(this.#stylesheets(customCss));
 
         target.addEventListener('contextmenu', (e) => {
             if (this.#opened()) {
@@ -84,12 +84,12 @@ export class ContextMenu {
         this.#container.hidden = true;
         this.#abortController.abort();
     }
-    #createShadowDom(customCss) {
+    #createShadowDom(stylesheets) {
         const host = document.createElement('div');
         document.body.appendChild(host);
 
         const root = host.attachShadow({ mode: 'open' });
-        root.adoptedStyleSheets = this.#stylesheets(customCss);
+        root.adoptedStyleSheets = stylesheets;
 
         this.#container = document.createElement('ul');
         this.#container.hidden = true;
