@@ -2,13 +2,34 @@ export class ContextMenu {
     #beforeOpen;
     #onClose;
     #container;
-    #containerCssClassName = 'menu';
     #abortController;
+    #css = `
+        ul {
+            background: white;
+            border: #ccc solid 1px;
+            border-radius: .5em;
+            box-shadow: .3em .3em .5em gray;
+            position: absolute;
+            user-select: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: .5em 1em;
+        }
+
+        li:hover {
+            border-radius: .5em;
+            background: #f1f1f1;
+        }
+    `;
 
     constructor({ target, beforeOpen, onClose }) {
         this.#beforeOpen = beforeOpen;
         this.#onClose = onClose;
-        this.#createContainer();
+        this.#createShadowDom();
 
         target.addEventListener('contextmenu', (e) => {
             if (this.#opened()) {
@@ -63,13 +84,19 @@ export class ContextMenu {
         this.#container.hidden = true;
         this.#abortController.abort();
     }
-    #createContainer() {
-        const container = document.createElement('ul');
-        container.classList.add(this.#containerCssClassName);
-        container.hidden = true;
+    #createShadowDom() {
+        const host = document.createElement('div');
+        document.body.appendChild(host);
 
-        this.#container = container;
-        document.body.appendChild(container);
+        const root = host.attachShadow({ mode: 'open' });
+        const style = document.createElement('style');
+        style.textContent = this.#css;
+
+        this.#container = document.createElement('ul');
+        this.#container.hidden = true;
+
+        root.appendChild(style);
+        root.appendChild(this.#container);
     }
     #opened() {
         return !this.#container.hidden;
