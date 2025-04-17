@@ -40,3 +40,18 @@ See [demo application](demo/index.html)
 ## Browser support
 
 It should work in any of the latest browsers.
+
+## Customization
+
+You can fully customize the menu by passing CSS code in a `css` property to a constructor. The provided CSS will be loaded after
+the [defaults](context_menu.mjs).
+
+```javascript
+const menu = new ContextMenu({
+  css: `
+    ul {
+      background: black;
+    }
+  `
+});
+```

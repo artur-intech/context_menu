@@ -3,7 +3,7 @@ export class ContextMenu {
     #onClose;
     #container;
     #abortController;
-    #css = `
+    #defaultCss = `
         ul {
             background: white;
             border: #ccc solid 1px;
@@ -26,10 +26,10 @@ export class ContextMenu {
         }
     `;
 
-    constructor({ target, beforeOpen, onClose }) {
+    constructor({ target, beforeOpen, onClose, css: customCss }) {
         this.#beforeOpen = beforeOpen;
         this.#onClose = onClose;
-        this.#createShadowDom();
+        this.#createShadowDom(customCss);
 
         target.addEventListener('contextmenu', (e) => {
             if (this.#opened()) {
@@ -84,15 +84,12 @@ export class ContextMenu {
         this.#container.hidden = true;
         this.#abortController.abort();
     }
-    #createShadowDom() {
+    #createShadowDom(customCss) {
         const host = document.createElement('div');
         document.body.appendChild(host);
 
         const root = host.attachShadow({ mode: 'open' });
-
-        const stylesheet = new CSSStyleSheet();
-        stylesheet.replaceSync(this.#css);
-        root.adoptedStyleSheets = [stylesheet];
+        root.adoptedStyleSheets = this.#stylesheets(customCss);
 
         this.#container = document.createElement('ul');
         this.#container.hidden = true;
@@ -137,5 +134,21 @@ export class ContextMenu {
         if (escPressed) {
             this.#close();
         }
+    }
+    #stylesheets(customCss) {
+        const list = [this.#defaultStylesheet()];
+
+        if (customCss) {
+            const sheet = new CSSStyleSheet();
+            sheet.replaceSync(customCss);
+            list.push(sheet);
+        }
+
+        return list;
+    }
+    #defaultStylesheet() {
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(this.#defaultCss);
+        return sheet;
     }
 }
