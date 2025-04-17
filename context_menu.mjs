@@ -93,7 +93,6 @@ export class ContextMenu {
 
         this.#container = document.createElement('ul');
         this.#container.hidden = true;
-
         root.appendChild(this.#container);
     }
     #opened() {
