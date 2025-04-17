@@ -31,12 +31,11 @@ export class ContextMenu {
             };
 
             document.addEventListener('scroll', this.#close.bind(this), options);
-            document.addEventListener('contextmenu', this.#close.bind(this), options);
             document.addEventListener('click', this.#close.bind(this), options);
             document.addEventListener('keydown', this.#onKeydown.bind(this), options);
 
-            // Without this the menu will be immediately closed by the `contextmenu` event handler on the document set
-            // above.
+            // Without `stopPropagation` the menu will be immediately closed by the `contextmenu` event handler.
+            document.addEventListener('contextmenu', this.#close.bind(this), options);
             e.stopPropagation();
 
             this.#disableDefaultContextMenu(e);
