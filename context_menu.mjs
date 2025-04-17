@@ -89,13 +89,14 @@ export class ContextMenu {
         document.body.appendChild(host);
 
         const root = host.attachShadow({ mode: 'open' });
-        const style = document.createElement('style');
-        style.textContent = this.#css;
+
+        const stylesheet = new CSSStyleSheet();
+        stylesheet.replaceSync(this.#css);
+        root.adoptedStyleSheets = [stylesheet];
 
         this.#container = document.createElement('ul');
         this.#container.hidden = true;
 
-        root.appendChild(style);
         root.appendChild(this.#container);
     }
     #opened() {
