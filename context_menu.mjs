@@ -65,7 +65,6 @@ export class ContextMenu {
     }
     createItem(label, action) {
         const item = document.createElement('li');
-        item.classList.add('item');
         item.textContent = label;
         item.addEventListener('click', action.bind(this));
 
