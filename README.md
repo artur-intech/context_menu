@@ -17,6 +17,16 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
 ```javascript
 const menu = new ContextMenu({
     target: document.querySelector('.js-items-with-context-menu'),
+    items: [{
+        label: 'Edit', action: function () {
+            console.log('Editing...');
+        }
+    },
+    {
+        label: 'Delete', action: function () {
+            console.log('Deleting...');
+        }
+    }],
     beforeOpen: function (_contextMenuEvent) {
         console.log('beforeOpen callback');
         return true; // A callback must return true
@@ -24,12 +34,6 @@ const menu = new ContextMenu({
     onClose: function () {
         console.log('onClose callback');
     }
-});
-menu.createItem('Edit', function () {
-    console.log('Editing...');
-});
-menu.createItem('Delete', function () {
-    console.log('Deleting...');
 });
 ```
 
