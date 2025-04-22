@@ -119,7 +119,8 @@ export class ContextMenu {
         const shadowRoot = this.#shadowRoot(customCss);
 
         const listElement = document.createElement('ul');
-        listElement.replaceChildren(...this.#itemElementList(rawItems));
+        const itemElementList = rawItems.map((rawItem) => { return this.#itemElement(rawItem) });
+        listElement.replaceChildren(...itemElementList);
         listElement.hidden = true;
         shadowRoot.appendChild(listElement);
 
@@ -150,15 +151,6 @@ export class ContextMenu {
         sheet.replaceSync(this.#defaultCss);
 
         return sheet;
-    }
-    #itemElementList(rawItems) {
-        const elements = [];
-
-        rawItems.forEach((rawItem) => {
-            elements.push(this.#itemElement(rawItem));
-        });
-
-        return elements;
     }
     #itemElement(rawItem) {
         const element = document.createElement('li');
