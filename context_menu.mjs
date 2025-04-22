@@ -116,15 +116,13 @@ export class ContextMenu {
         }
     }
     #buildDom(rawItems, customCss) {
-        const shadowRoot = this.#shadowRoot(customCss);
+        const menu = document.createElement('ul');
+        const items = rawItems.map((rawItem) => { return this.#itemElement(rawItem) });
+        menu.replaceChildren(...items);
+        menu.hidden = true;
+        this.#shadowRoot(customCss).appendChild(menu);
 
-        const listElement = document.createElement('ul');
-        const itemElementList = rawItems.map((rawItem) => { return this.#itemElement(rawItem) });
-        listElement.replaceChildren(...itemElementList);
-        listElement.hidden = true;
-        shadowRoot.appendChild(listElement);
-
-        this.#container = listElement;
+        this.#container = menu;
     }
     #shadowRoot(customCss) {
         const host = document.createElement('div');
