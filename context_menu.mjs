@@ -117,19 +117,19 @@ export class ContextMenu {
     }
     #buildDom(rawItems, customCss) {
         const menu = document.createElement('ul');
-        const items = rawItems.map((rawItem) => { return this.#itemElement(rawItem) });
-        menu.replaceChildren(...items);
         menu.hidden = true;
-        this.#shadowRoot(customCss).appendChild(menu);
+        menu.replaceChildren(...this.#items(rawItems));
+
+        this.#shadowRoot(this.#stylesheets(customCss)).appendChild(menu);
 
         this.#container = menu;
     }
-    #shadowRoot(customCss) {
+    #shadowRoot(stylesheets) {
         const host = document.createElement('div');
         document.body.appendChild(host);
 
         const root = host.attachShadow({ mode: 'open' });
-        root.adoptedStyleSheets = this.#stylesheets(customCss);
+        root.adoptedStyleSheets = stylesheets;
 
         return root;
     }
@@ -150,11 +150,13 @@ export class ContextMenu {
 
         return sheet;
     }
-    #itemElement(rawItem) {
-        const element = document.createElement('li');
-        element.textContent = rawItem.label;
-        element.addEventListener('click', rawItem.action.bind(this));
+    #items(rawItems) {
+        return rawItems.map((rawItem) => {
+            const element = document.createElement('li');
+            element.textContent = rawItem.label;
+            element.addEventListener('click', rawItem.action.bind(this));
 
-        return element;
+            return element;
+        })
     }
 }
