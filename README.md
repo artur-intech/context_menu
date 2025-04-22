@@ -15,7 +15,7 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
 2. Use `ContextMenu` class to create a new context menu:
 
 ```javascript
-const menu = new ContextMenu({
+new ContextMenu({
     target: document.querySelector('.js-items-with-context-menu'),
     items: [{
         label: 'Edit', action: function () {
