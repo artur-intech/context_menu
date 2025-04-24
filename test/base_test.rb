@@ -68,7 +68,7 @@ class BaseTest < Minitest::Test
 
   def test_closes_on_scroll
     open
-    trigger_scrolling
+    make_document_long
 
     scroll_to(10, 10)
 
@@ -103,7 +103,7 @@ class BaseTest < Minitest::Test
     assert_opened
   end
 
-  def trigger_scrolling
+  def make_document_long
     execute_script("document.querySelector('#test-area').style.marginTop = '1000px';")
   end
 end
