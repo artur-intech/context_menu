@@ -49,7 +49,6 @@ class BaseTest < Minitest::Test
   def test_opens_on_right_click
     find('.js-with-context-menu').right_click(x: 10, y: 10)
 
-    menu = self.menu
     assert_opened
     assert_equal ({"visibility" => "visible", "left" => "10px", "top" => "10px"}), menu.style('visibility', 'left', 'top')
   end
@@ -95,7 +94,7 @@ class BaseTest < Minitest::Test
   end
 
   def menu
-    find(:element, "data-testid": "context-menu-shadow-host").shadow_root.find('[data-testid="menu"]')
+    @menu ||= find(:element, "data-testid": "context-menu-shadow-host").shadow_root.find('[data-testid="menu"]')
   end
 
   def open
