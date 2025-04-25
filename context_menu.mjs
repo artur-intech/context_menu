@@ -118,6 +118,7 @@ export class ContextMenu {
     #buildDom(rawItems, customCss) {
         const menu = document.createElement('ul');
         menu.hidden = true;
+        menu.dataset.testid = 'menu';
         menu.replaceChildren(...this.#items(rawItems));
 
         this.#shadowRoot(this.#stylesheets(customCss)).appendChild(menu);
@@ -126,6 +127,7 @@ export class ContextMenu {
     }
     #shadowRoot(stylesheets) {
         const host = document.createElement('div');
+        host.dataset.testid = 'context-menu-shadow-host';
         document.body.appendChild(host);
 
         const root = host.attachShadow({ mode: 'open' });
