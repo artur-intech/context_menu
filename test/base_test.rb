@@ -47,6 +47,7 @@ class BaseTest < Minitest::Test
   end
 
   def test_opens_on_right_click
+    setup_minimal
     find('.js-with-context-menu').right_click(x: 10, y: 10)
 
     assert_opened
@@ -54,18 +55,21 @@ class BaseTest < Minitest::Test
   end
 
   def test_closes_on_esc_key
+    setup_minimal
     open
     send_keys :escape
     assert_closed
   end
 
   def test_closes_on_outside_click
+    setup_minimal
     open
     find('body').click
     assert_closed
   end
 
   def test_closes_on_scroll
+    setup_minimal
     open
     make_document_long
 
@@ -75,6 +79,7 @@ class BaseTest < Minitest::Test
   end
 
   def test_closes_on_resize
+    setup_minimal
     open
 
     size = current_window.size
@@ -160,5 +165,18 @@ class BaseTest < Minitest::Test
 
   def close
     send_keys :escape
+  end
+
+  def setup_minimal
+    execute_script <<-JS
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'any', action: () => {}}],
+          beforeOpen: () => {
+            return true;
+          },
+      });
+    JS
   end
 end
