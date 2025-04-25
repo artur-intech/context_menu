@@ -1,0 +1,19 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "shutdownAction": "stopContainer",
+  "remoteUser": "vscode",
+  "postCreateCommand": "(grep -q \"PS1=\" ~/.bashrc || echo 'export PS1=\"\\W \\$ \"' >> ~/.bashrc)",
+  "mounts": [
+    "source=profile,target=/home/vscode,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "shopify.ruby-lsp",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}
