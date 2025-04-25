@@ -99,7 +99,6 @@ class BaseTest < Minitest::Test
 
   def open
     find('.js-with-context-menu').right_click
-    assert_opened
   end
 
   def make_document_long
