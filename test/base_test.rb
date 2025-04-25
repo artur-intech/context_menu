@@ -83,6 +83,59 @@ class BaseTest < Minitest::Test
     assert_closed
   end
 
+  def test_executes_on_close_callback
+    execute_script <<-JS
+      globalThis.executed = false;
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'any', action: () => {}}],
+          onClose: () => {
+            globalThis.executed = true;
+          },
+      });
+    JS
+    open
+
+    close
+
+    assert evaluate_script("executed")
+  end
+
+  def test_does_not_open_when_before_open_callback_returns_false
+    execute_script <<-JS
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'any', action: () => {}}],
+          beforeOpen: () => {
+            return false;
+          },
+      });
+    JS
+
+    open
+
+    assert_closed
+  end
+
+  def test_opens_when_before_open_callback_returns_true
+    execute_script <<-JS
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'any', action: () => {}}],
+          beforeOpen: () => {
+            return true;
+          },
+      });
+    JS
+
+    open
+
+    assert_opened
+  end
+
   private
 
   def assert_opened
@@ -103,5 +156,9 @@ class BaseTest < Minitest::Test
 
   def make_document_long
     execute_script("document.querySelector('#test-area').style.marginTop = '1000px';")
+  end
+
+  def close
+    send_keys :escape
   end
 end
