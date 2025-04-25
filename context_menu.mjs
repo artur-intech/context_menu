@@ -62,6 +62,7 @@ export class ContextMenu {
 
             this.#disableDefaultContextMenu(e);
         });
+        Object.freeze(this);
     }
     #open(posPx) {
         this.#container.style.left = `${posPx.x}px`;
