@@ -57,14 +57,18 @@ class BaseTest < Minitest::Test
   def test_closes_on_esc_key
     setup_minimal
     open
+
     send_keys :escape
+
     assert_closed
   end
 
   def test_closes_on_outside_click
     setup_minimal
     open
+
     find('body').click
+
     assert_closed
   end
 
