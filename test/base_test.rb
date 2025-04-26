@@ -145,6 +145,30 @@ class BaseTest < Minitest::Test
     assert_opened
   end
 
+  def test_shifts_when_document_overflow_is_predicted
+    setup_minimal
+
+    execute_script <<-JS
+      const find = document.querySelector.bind(document);
+      const testArea = find('#test-area');
+      const event = new MouseEvent('contextmenu', {
+        pageX: testArea.offsetWidth - 1,
+        pageY: testArea.offsetHeight - 1,
+        clientX: testArea.offsetWidth - 1,
+        clientY: testArea.offsetHeight - 1
+      });
+      find('.js-with-context-menu').dispatchEvent(event);
+    JS
+
+    assert_opened
+    edge_offset_px = 5
+    expected_position_x = find('body')['scrollWidth'].to_i - menu['offsetWidth'].to_i - edge_offset_px
+    expected_position_y = find('body')['scrollHeight'].to_i - menu['offsetHeight'].to_i - edge_offset_px
+    assert_equal ({"visibility" => "visible", "left" => "#{expected_position_x}px",
+                                              "top" => "#{expected_position_y}px"}),
+                  menu.style('visibility', 'left', 'top')
+  end
+
   private
 
   def assert_opened
