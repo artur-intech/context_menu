@@ -145,20 +145,10 @@ class BaseTest < Minitest::Test
     assert_opened
   end
 
-  def test_shifts_when_document_overflow_is_predicted
+  def test_shifts_when_clicked_near_viewport_edge
     setup_minimal
 
-    execute_script <<-JS
-      const find = document.querySelector.bind(document);
-      const testArea = find('#test-area');
-      const event = new MouseEvent('contextmenu', {
-        pageX: testArea.offsetWidth - 1,
-        pageY: testArea.offsetHeight - 1,
-        clientX: testArea.offsetWidth - 1,
-        clientY: testArea.offsetHeight - 1
-      });
-      find('.js-with-context-menu').dispatchEvent(event);
-    JS
+    right_click_near_viewport_edge
 
     assert_opened
     edge_offset_px = 5
@@ -205,6 +195,20 @@ class BaseTest < Minitest::Test
             return true;
           },
       });
+    JS
+  end
+
+  def right_click_near_viewport_edge
+    execute_script <<-JS
+      const find = document.querySelector.bind(document);
+      const testArea = find('#test-area');
+      const event = new MouseEvent('contextmenu', {
+        pageX: testArea.offsetWidth - 1,
+        pageY: testArea.offsetHeight - 1,
+        clientX: testArea.offsetWidth - 1,
+        clientY: testArea.offsetHeight - 1
+      });
+      find('.js-with-context-menu').dispatchEvent(event);
     JS
   end
 end
