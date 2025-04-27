@@ -41,9 +41,8 @@ export class ContextMenu {
                 return;
             }
 
-            const cursorPosPx = { x: e.pageX, y: e.pageY };
-            const posPx = this.#nonOverflowCoordsPx(cursorPosPx);
-            this.#open(posPx);
+            const [coordXPx, coordYPx] = this.#nonOverflowCoordsPx(e.pageX, e.pageY);
+            this.#open(coordXPx, coordYPx);
 
             this.#abortController = new AbortController();
             const options = {
@@ -64,9 +63,9 @@ export class ContextMenu {
         });
         Object.freeze(this);
     }
-    #open(posPx) {
-        this.#container.style.left = `${posPx.x}px`;
-        this.#container.style.top = `${posPx.y}px`;
+    #open(coordXPx, coordYPx) {
+        this.#container.style.left = `${coordXPx}px`;
+        this.#container.style.top = `${coordYPx}px`;
         this.#container.style.visibility = 'visible';
         this.#container.hidden = false;
     }
@@ -80,24 +79,24 @@ export class ContextMenu {
     #opened() {
         return !this.#container.hidden;
     }
-    #nonOverflowCoordsPx(cursorPosPx) {
-        let x = cursorPosPx.x;
-        let y = cursorPosPx.y;
+    #nonOverflowCoordsPx(x, y) {
+        let outX = x;
+        let outY = y;
         const edgeOffset = 5;
 
         this.#renderInvisibly();
 
         const documentXOverflown = (x + this.#container.offsetWidth) > document.documentElement.scrollWidth;
         if (documentXOverflown) {
-            x = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffset;
+            outX = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffset;
         }
 
         const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.scrollHeight;
         if (documentYOverflown) {
-            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffset;
+            outY = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffset;
         }
 
-        return { y: y, x: x };
+        return [outX, outY];
     }
     // Renders hidden container to enable dimensions calculation.
     #renderInvisibly() {
