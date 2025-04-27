@@ -37,7 +37,7 @@ export class ContextMenu {
             }
 
             // Call back
-            if (!this.#beforeOpen(e)) {
+            if (this.#beforeOpen && !this.#beforeOpen(e)) {
                 return;
             }
 
@@ -72,7 +72,7 @@ export class ContextMenu {
     #close() {
         if (this.#container.hidden) return;
 
-        this.#onClose();
+        if (this.#onClose) this.#onClose();
         this.#container.hidden = true;
         this.#abortController.abort();
     }
