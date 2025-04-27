@@ -79,19 +79,19 @@ export class ContextMenu {
     #opened() {
         return !this.#container.hidden;
     }
-    #nonOverflowCoordsPx(x, y) {
-        let outX = x;
-        let outY = y;
+    #nonOverflowCoordsPx(clickPageX, clickPageY) {
+        let outX = clickPageX;
+        let outY = clickPageY;
         const edgeOffset = 5;
 
         this.#renderInvisibly();
 
-        const documentXOverflown = (x + this.#container.offsetWidth) > document.documentElement.clientWidth + window.scrollX;
+        const documentXOverflown = (clickPageX + this.#container.offsetWidth) > document.documentElement.clientWidth + window.scrollX;
         if (documentXOverflown) {
             outX = document.documentElement.clientWidth + window.scrollX - this.#container.offsetWidth - edgeOffset;
         }
 
-        const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.clientHeight + window.scrollY;
+        const documentYOverflown = (clickPageY + this.#container.offsetHeight) > document.documentElement.clientHeight + window.scrollY;
         if (documentYOverflown) {
             outY = document.documentElement.clientHeight + window.scrollY - this.#container.offsetHeight - edgeOffset;
         }
