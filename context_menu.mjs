@@ -1,5 +1,5 @@
 export class ContextMenu {
-    #beforeOpen;
+    #openCondition;
     #onClose;
     #container;
     #abortController;
@@ -26,8 +26,8 @@ export class ContextMenu {
         }
     `;
 
-    constructor({ target, items: rawItems, beforeOpen, onClose, css: customCss }) {
-        this.#beforeOpen = beforeOpen;
+    constructor({ target, items: rawItems, openCondition, onClose, css: customCss }) {
+        this.#openCondition = openCondition;
         this.#onClose = onClose;
         this.#buildDom(rawItems, customCss);
 
@@ -36,8 +36,7 @@ export class ContextMenu {
                 this.#close();
             }
 
-            // Call back
-            if (this.#beforeOpen && !this.#beforeOpen(e)) {
+            if (this.#openCondition && !this.#openCondition(e)) {
                 return;
             }
 
