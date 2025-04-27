@@ -42,7 +42,7 @@ export class ContextMenu {
             }
 
             const cursorPosPx = { x: e.pageX, y: e.pageY };
-            const posPx = this.#posPx(cursorPosPx);
+            const posPx = this.#nonOverflowCoordsPx(cursorPosPx);
             this.#open(posPx);
 
             this.#abortController = new AbortController();
@@ -80,21 +80,21 @@ export class ContextMenu {
     #opened() {
         return !this.#container.hidden;
     }
-    #posPx(cursorPosPx) {
+    #nonOverflowCoordsPx(cursorPosPx) {
         let x = cursorPosPx.x;
         let y = cursorPosPx.y;
-        const edgeOffsetPx = 5;
+        const edgeOffset = 5;
 
         this.#renderInvisibly();
 
         const documentXOverflown = (x + this.#container.offsetWidth) > document.documentElement.scrollWidth;
         if (documentXOverflown) {
-            x = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffsetPx;
+            x = document.documentElement.scrollWidth - this.#container.offsetWidth - edgeOffset;
         }
 
         const documentYOverflown = (y + this.#container.offsetHeight) > document.documentElement.scrollHeight;
         if (documentYOverflown) {
-            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffsetPx;
+            y = document.documentElement.scrollHeight - this.#container.offsetHeight - edgeOffset;
         }
 
         return { y: y, x: x };
