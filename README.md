@@ -53,8 +53,14 @@ the [defaults](context_menu.mjs#L6).
 ```javascript
 const menu = new ContextMenu({
   css: `
+    // A container
     ul {
       background: black;
+    }
+
+    // An item
+    li {
+      color: white;
     }
   `
 });
