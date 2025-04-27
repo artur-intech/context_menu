@@ -64,8 +64,8 @@ export class ContextMenu {
         Object.freeze(this);
     }
     #open(coordXPx, coordYPx) {
-        this.#container.style.left = `${coordXPx}px`;
-        this.#container.style.top = `${coordYPx}px`;
+        this.#container.style.left = this.#pixelatedString(coordXPx);
+        this.#container.style.top = this.#pixelatedString(coordYPx);
         this.#container.style.visibility = 'visible';
         this.#container.hidden = false;
     }
@@ -160,5 +160,8 @@ export class ContextMenu {
 
             return element;
         })
+    }
+    #pixelatedString(int) {
+        return `${int}px`;
     }
 }
