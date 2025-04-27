@@ -86,13 +86,13 @@ export class ContextMenu {
 
         this.#renderInvisibly();
 
-        const documentXOverflown = (clickPageX + this.#container.offsetWidth) > document.documentElement.clientWidth + window.scrollX;
-        if (documentXOverflown) {
+        const viewportOverflownX = (clickPageX + this.#container.offsetWidth) > document.documentElement.clientWidth + window.scrollX;
+        if (viewportOverflownX) {
             outX = document.documentElement.clientWidth + window.scrollX - this.#container.offsetWidth - edgeOffset;
         }
 
-        const documentYOverflown = (clickPageY + this.#container.offsetHeight) > document.documentElement.clientHeight + window.scrollY;
-        if (documentYOverflown) {
+        const viewportOverflownY = (clickPageY + this.#container.offsetHeight) > document.documentElement.clientHeight + window.scrollY;
+        if (viewportOverflownY) {
             outY = document.documentElement.clientHeight + window.scrollY - this.#container.offsetHeight - edgeOffset;
         }
 
