@@ -30,36 +30,7 @@ export class ContextMenu {
         this.#openCondition = openCondition;
         this.#onClose = onClose;
         this.#buildDom(rawItems, customCss);
-
-        target.addEventListener('contextmenu', (e) => {
-            if (this.#opened()) {
-                this.#close();
-            }
-
-            if (this.#openCondition && !this.#openCondition(e)) {
-                return;
-            }
-
-            const [coordXPx, coordYPx] = this.#nonOverflowCoordsPx(e.pageX, e.pageY);
-            this.#open(coordXPx, coordYPx);
-
-            this.#abortController = new AbortController();
-            const options = {
-                once: true,
-                signal: this.#abortController.signal
-            };
-
-            document.addEventListener('scroll', this.#close.bind(this), options);
-            document.addEventListener('click', this.#close.bind(this), options);
-            document.addEventListener('keydown', this.#onKeydown.bind(this), options);
-            window.addEventListener('resize', this.#close.bind(this), options);
-
-            // Without `stopPropagation` the menu will be immediately closed by the `contextmenu` event handler.
-            document.addEventListener('contextmenu', this.#close.bind(this), options);
-            e.stopPropagation();
-
-            this.#disableDefaultContextMenu(e);
-        });
+        target.addEventListener('contextmenu', this.#onContextmenu.bind(this));
         Object.freeze(this);
     }
     #open(coordXPx, coordYPx) {
@@ -162,5 +133,34 @@ export class ContextMenu {
     }
     #pixelatedString(int) {
         return `${int}px`;
+    }
+    #onContextmenu(e) {
+        if (this.#opened()) {
+            this.#close();
+        }
+
+        if (this.#openCondition && !this.#openCondition(e)) {
+            return;
+        }
+
+        const [coordXPx, coordYPx] = this.#nonOverflowCoordsPx(e.pageX, e.pageY);
+        this.#open(coordXPx, coordYPx);
+
+        this.#abortController = new AbortController();
+        const options = {
+            once: true,
+            signal: this.#abortController.signal
+        };
+
+        document.addEventListener('scroll', this.#close.bind(this), options);
+        document.addEventListener('click', this.#close.bind(this), options);
+        document.addEventListener('keydown', this.#onKeydown.bind(this), options);
+        window.addEventListener('resize', this.#close.bind(this), options);
+
+        // Without `stopPropagation` the menu will be immediately closed by the `contextmenu` event handler.
+        document.addEventListener('contextmenu', this.#close.bind(this), options);
+        e.stopPropagation();
+
+        this.#disableDefaultContextMenu(e);
     }
 }
