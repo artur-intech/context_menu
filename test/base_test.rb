@@ -201,6 +201,21 @@ class BaseTest < Minitest::Test
     assert_match 'No items were provided. At least one is required.', error.message
   end
 
+  def test_custom_css
+    execute_script <<-JS
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'Item', action: () => {}}],
+          css: 'ul { content: "test" }'
+      });
+    JS
+
+    open
+
+    assert_equal '"test"', menu.style('content')['content']
+  end
+
   private
 
   def assert_opened
