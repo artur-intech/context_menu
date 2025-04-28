@@ -117,7 +117,7 @@ class BaseTest < Minitest::Test
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
-          beforeOpen: () => {
+          openCondition: () => {
             return false;
           },
       });
@@ -134,7 +134,7 @@ class BaseTest < Minitest::Test
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
-          beforeOpen: () => {
+          openCondition: () => {
             return true;
           },
       });
@@ -191,7 +191,7 @@ class BaseTest < Minitest::Test
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
-          beforeOpen: () => {
+          openCondition: () => {
             return true;
           },
       });
