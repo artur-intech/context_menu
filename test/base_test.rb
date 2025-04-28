@@ -159,6 +159,17 @@ class BaseTest < Minitest::Test
                   menu.style('visibility', 'left', 'top')
   end
 
+  def test_closes_on_outside_right_click
+    setup_minimal
+    make_test_area_smaller_than_document
+    open
+
+    find('body').right_click
+
+    assert_closed
+  end
+
+
   private
 
   def assert_opened
@@ -209,6 +220,13 @@ class BaseTest < Minitest::Test
         clientY: testArea.offsetHeight - 1
       });
       find('.js-with-context-menu').dispatchEvent(event);
+    JS
+  end
+
+  def make_test_area_smaller_than_document
+    execute_script <<-JS
+      const testArea = document.querySelector('#test-area');
+      testArea.style.width = testArea.style.height = '500px';
     JS
   end
 end
