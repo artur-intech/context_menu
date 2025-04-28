@@ -188,6 +188,19 @@ class BaseTest < Minitest::Test
     assert_closed
   end
 
+  def test_throws_exception_when_no_items_provided
+    error = assert_raises Selenium::WebDriver::Error::JavascriptError do
+      execute_script <<-JS
+        const { ContextMenu } = await import("../context_menu.mjs");
+        new ContextMenu({
+            target: document.querySelector('.js-with-context-menu'),
+            items: []
+        });
+      JS
+    end
+    assert_match 'No items were provided. At least one is required.', error.message
+  end
+
   private
 
   def assert_opened

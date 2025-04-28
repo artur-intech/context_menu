@@ -27,6 +27,10 @@ export class ContextMenu {
     `;
 
     constructor({ target, items: rawItems, openCondition, onClose, css: customCss }) {
+        if (!rawItems.length) {
+            throw new Error("No items were provided. At least one is required.");
+        }
+
         this.#openCondition = openCondition;
         this.#onClose = onClose;
         this.#buildDom(rawItems, customCss);
