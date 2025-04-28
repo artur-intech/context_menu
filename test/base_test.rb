@@ -169,6 +169,24 @@ class BaseTest < Minitest::Test
     assert_closed
   end
 
+  def test_executes_item_click_callback_and_closes
+    execute_script <<-JS
+      globalThis.executed = false;
+      const { ContextMenu } = await import("../context_menu.mjs");
+      new ContextMenu({
+          target: document.querySelector('.js-with-context-menu'),
+          items: [{label: 'Item', action: () => {
+            globalThis.executed = true;
+          }}]
+      });
+    JS
+    open
+
+    menu.find('li', text: 'Item').click
+
+    assert evaluate_script("executed")
+    assert_closed
+  end
 
   private
 
