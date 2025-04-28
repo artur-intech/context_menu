@@ -131,6 +131,7 @@ export class ContextMenu {
             return element;
         })
     }
+    // CSS.px is unsupported in Firefox
     #pixelatedString(int) {
         return `${int}px`;
     }
