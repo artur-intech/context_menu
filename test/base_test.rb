@@ -44,6 +44,10 @@ class BaseTest < Minitest::Test
 
   def setup
     visit "/app.html"
+    execute_script <<-JS
+      const { ContextMenu } = await import("../context_menu.mjs");
+      globalThis.ContextMenu = ContextMenu;
+    JS
   end
 
   def test_opens_on_right_click
@@ -95,7 +99,6 @@ class BaseTest < Minitest::Test
   def test_executes_on_close_callback
     execute_script <<-JS
       globalThis.executed = false;
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
@@ -113,7 +116,6 @@ class BaseTest < Minitest::Test
 
   def test_does_not_open_when_before_open_callback_returns_false
     execute_script <<-JS
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
@@ -130,7 +132,6 @@ class BaseTest < Minitest::Test
 
   def test_opens_when_before_open_callback_returns_true
     execute_script <<-JS
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
@@ -172,7 +173,6 @@ class BaseTest < Minitest::Test
   def test_executes_item_click_callback_and_closes
     execute_script <<-JS
       globalThis.executed = false;
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'Item', action: () => {
@@ -191,7 +191,6 @@ class BaseTest < Minitest::Test
   def test_throws_exception_when_no_items_provided
     error = assert_raises Selenium::WebDriver::Error::JavascriptError do
       execute_script <<-JS
-        const { ContextMenu } = await import("../context_menu.mjs");
         new ContextMenu({
             target: document.querySelector('.js-with-context-menu'),
             items: []
@@ -203,7 +202,6 @@ class BaseTest < Minitest::Test
 
   def test_custom_css
     execute_script <<-JS
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'Item', action: () => {}}],
@@ -244,7 +242,6 @@ class BaseTest < Minitest::Test
 
   def setup_minimal
     execute_script <<-JS
-      const { ContextMenu } = await import("../context_menu.mjs");
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
           items: [{label: 'any', action: () => {}}],
