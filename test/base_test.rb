@@ -170,7 +170,7 @@ class BaseTest < Minitest::Test
     assert_closed
   end
 
-  def test_executes_item_click_callback_and_closes
+  def test_executes_item_action_and_closes
     execute_script <<-JS
       globalThis.executed = false;
       new ContextMenu({
