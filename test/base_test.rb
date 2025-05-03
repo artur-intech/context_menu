@@ -114,7 +114,7 @@ class BaseTest < Minitest::Test
     assert evaluate_script("executed")
   end
 
-  def test_does_not_open_when_before_open_callback_returns_false
+  def test_does_not_open_when_open_condition_falsy
     execute_script <<-JS
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
