@@ -144,7 +144,7 @@ export class ContextMenu {
             this.#close();
         }
 
-        if (this.#openCondition && !this.#openCondition(e)) {
+        if (this.#openCondition && !this.#openCondition(e.target)) {
             return;
         }
 
