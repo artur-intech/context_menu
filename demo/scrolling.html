@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ContextMenu scrolling demo</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            /* Affects click coordinates */
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #test-area {
+            background: #ccc;
+            width: 2000px;
+            height: 3000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test-area" class="js-with-context-menu"></div>
+    <script type="module">
+        const { ContextMenu } = await import("../context_menu.mjs");
+
+        new ContextMenu({
+            target: document.querySelector('.js-with-context-menu'),
+            items: [{
+                label: 'Edit', action: function () {
+                    console.log('Editing...');
+                }
+            },
+            {
+                label: 'Delete', action: function () {
+                    console.log('Deleting...');
+                }
+            }],
+            openCondition: function (_contextMenuEvent) {
+                console.log('beforeOpen callback');
+                return true; // A callback must return true
+            },
+            onClose: function () {
+                console.log('onClose callback');
+            },
+        });
+
+    </script>
+</body>
+
+</html>
