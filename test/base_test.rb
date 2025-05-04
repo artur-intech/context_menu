@@ -130,7 +130,7 @@ class BaseTest < Minitest::Test
     assert_closed
   end
 
-  def test_opens_when_before_open_callback_returns_true
+  def test_opens_when_open_condition_truthy
     execute_script <<-JS
       new ContextMenu({
           target: document.querySelector('.js-with-context-menu'),
