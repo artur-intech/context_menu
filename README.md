@@ -14,38 +14,38 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
     Tune the path to a file according to your environment.
 2. Use `ContextMenu` class to create a new context menu:
 
-```javascript
-new ContextMenu({
-    target: document.querySelector('.js-items-with-context-menu'),
-    items: [{
-        label: 'Edit', action: function () {
-            console.log('Editing...');
+    ```javascript
+    new ContextMenu({
+        target: document.querySelector('.js-items-with-context-menu'),
+        items: [{
+            label: 'Edit', action: function () {
+                console.log('Editing...');
+            }
+        },
+        {
+            label: 'Delete', action: function () {
+                console.log('Deleting...');
+            }
+        }],
+        openCondition: function (targetElement) {
+            console.log('beforeOpen callback');
+            return true; // Must return true to open the menu.
+        },
+        onClose: function () {
+            console.log('onClose callback');
         }
-    },
-    {
-        label: 'Delete', action: function () {
-            console.log('Deleting...');
-        }
-    }],
-    openCondition: function (targetElement) {
-        console.log('beforeOpen callback');
-        return true; // Must return true to open the menu.
-    },
-    onClose: function () {
-        console.log('onClose callback');
-    }
-});
-```
+    });
+    ```
 
-where:
+    where:
 
-- `target` is a required instance of an [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) on which the `ContextMenu` listens
-for `contextmenu` events. Required.
-- `items` is a required array of item objects in the form of `{ label: "", action: function(){} }`. At least one item is required.
-- `openCondition` is an optional function that must return a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) to open the
-menu. Passes [`PointerEvent.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) of the `contextmenu` event handler as a first
-parameter. This callback function might be used to fetch data from an HTML element. See [multiple items demo](demo/multiple_items.html).
-- `onClose` is an optional function that is called when the menu is closed.
+    - `target` is a required instance of an [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) on which the `ContextMenu` listens
+    for `contextmenu` events. Required.
+    - `items` is a required array of item objects in the form of `{ label: "", action: function(){} }`. At least one item is required.
+    - `openCondition` is an optional function that must return a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) to open the
+    menu. Passes [`PointerEvent.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) of the `contextmenu` event handler as a first
+    parameter. This callback function might be used to fetch data from an HTML element. See [multiple items demo](demo/multiple_items.html).
+    - `onClose` is an optional function that is called when the menu is closed.
 
 ## Demo
 
