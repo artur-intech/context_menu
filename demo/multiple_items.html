@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ContextMenu multiple items demo</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            /* Affects click coordinates */
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 150%;
+        }
+
+        .item-list {
+            width: fit-content;
+            height: 15em;
+            display: flex;
+        }
+
+        .item-list .item {
+            background: #aaa;
+            border: white 1px solid;
+            padding: 1em;
+            margin-left: 1em;
+        }
+
+        .item:not(:first-child) {
+            margin-left: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="item-list js-with-context-menu">
+        <div class="item" data-id="1">item1</div>
+        <div class="item" data-id="2">item2</div>
+    </div>
+    <script type="module">
+        const { ContextMenu } = await import("../context_menu.mjs");
+
+        new ContextMenu({
+            target: document.querySelector('.js-with-context-menu'),
+            items: [{
+                label: 'Edit', action: function () {
+                    console.log('Editing...');
+                }
+            },
+            {
+                label: 'Delete', action: function () {
+                    console.log('Deleting...');
+                }
+            }],
+            openCondition: function (target) {
+                const matched = target.matches(".item");
+                const id = target.dataset.id;
+                console.log(id);
+
+                return matched;
+            },
+
+        });
+    </script>
+</body>
+
+</html>
