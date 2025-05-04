@@ -27,9 +27,9 @@ new ContextMenu({
             console.log('Deleting...');
         }
     }],
-    openCondition: function (_contextMenuEvent) {
+    openCondition: function (targetElement) {
         console.log('beforeOpen callback');
-        return true; // A callback must return true
+        return true; // Must return true to open the menu.
     },
     onClose: function () {
         console.log('onClose callback');
