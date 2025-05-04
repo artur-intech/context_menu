@@ -40,7 +40,7 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
     where:
 
     - `target` is a required instance of an [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) on which the `ContextMenu` listens
-    for `contextmenu` events. Required.
+    for `contextmenu` events.
     - `items` is a required array of item objects in the form of `{ label: "", action: function(){} }`. At least one item is required.
     - `openCondition` is an optional function that must return a [truthy value](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) to open the
     menu. Passes [`PointerEvent.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) of the `contextmenu` event handler as a first
