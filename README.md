@@ -5,6 +5,13 @@ since it has fewer than 100 lines of JS code, and doing so would be overkill.
 
 Initially, it was a part of the [Stack Overflow question](https://stackoverflow.com/q/4909167/2987689), but later ended up in this repository.
 
+# Features:
+- Extremely lightweight (less than 200 lines of js code)
+- Written in Vanilla JS, CSS and HTML
+- Framework-independent, no third-party dependencies
+- Fully customizable using plain CSS (you can dark mode support by youself with [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme))
+- No effects or animations
+
 ## Usage
 
 1. Include the JS module:
