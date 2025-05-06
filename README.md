@@ -9,7 +9,7 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
 - Extremely lightweight (less than 200 lines of js code)
 - Written in Vanilla JS, CSS and HTML
 - Framework-independent, no third-party dependencies
-- Fully customizable using plain CSS (you can add dark mode support by youself with [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme))
+- Fully customizable using plain CSS (you can add dark mode support by yourself with [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme))
 - No effects or animations
 
 ## Usage
