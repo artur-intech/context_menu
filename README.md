@@ -47,6 +47,31 @@ Initially, it was a part of the [Stack Overflow question](https://stackoverflow.
     parameter. This callback function might be used to fetch data from an HTML element. See [multiple items demo](demo/multiple_items.html).
     - `onClose` is an optional function that is called when the menu is closed.
 
+    Only one menu can be used at a time. The behavior of creating multiple `ContextMenu` objects is unexpected.
+
+### Employ event bubbling using `target` and `openCondition`
+
+While it's technically possible to use a context menu on a single element (i.e., one specified as the `target` parameter without any filtering in the
+`openCondition` callback), typically it's designed for multiple elements. For example, this could apply to notes in a note-taking app, emails in an
+email client, or similar list-based interfaces. To create a context menu for all items in a list, you should pass the container element holding the items
+as the `target` parameter, then use the `openCondition` callback to filter which specific elements should trigger the menu:
+
+```js
+new ContextMenu({
+    target: document.querySelector('.js-items-with-context-menu'),
+    openCondition: function (target) {
+        const matched = target.matches(".item");
+        const id = target.dataset.id;
+
+        // do something with the id
+
+        return matched;
+    }
+});
+```
+
+This technique is based on [Event bubbling](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling).
+
 ## Demo
 
 See [demo directory](demo).
