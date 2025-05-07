@@ -85,7 +85,7 @@ See [demo directory](demo).
 
 It should work in any of the latest browsers.
 
-## Customization
+## UI customization
 
 You can fully customize the menu by passing CSS code in a `css` property to a constructor. The provided CSS will be loaded after
 the [defaults](context_menu.mjs#L6).
