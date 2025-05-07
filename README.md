@@ -3,7 +3,7 @@
 This is a very minimalist context menu code snippet written in Vanilla JS. At the moment it isn't distributed through any package manager. Initially,
 the snippet was a part of the [Stack Overflow question](https://stackoverflow.com/q/4909167/2987689), but later was moved into this repository.
 
-# Features:
+## Features:
 - Extremely lightweight (less than 200 lines of js code)
 - Written in Vanilla JS, CSS and HTML
 - Framework-independent, no third-party dependencies
